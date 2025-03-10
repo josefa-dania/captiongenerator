@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fancy Image Caption Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>📸 Image Caption Generator</h1>
+
+            <form method="POST" enctype="multipart/form-data">
+                <label for="image-upload" class="upload-btn">
+                    <input id="image-upload" type="file" name="image" accept="image/*" onchange="previewImage(event)" required>
+                    Choose an Image
+                </label>
+
+                <div id="image-preview-container">
+                    <img id="image-preview" src="#" alt="Image Preview" />
+                </div>
+
+                <button type="submit" class="generate-btn">✨ Generate Caption</button>
+            </form>
+
+            {% if image_path %}
+            <div class="result">
+                <img src="{{ image_path }}" alt="Uploaded Image" class="final-image">
+                <div class="caption-box">
+                    <p>{{ caption }}</p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const preview = document.getElementById('image-preview');
+                const container = document.getElementById('image-preview-container');
+                preview.src = reader.result;
+                container.style.display = "block";
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+</body>
+</html>
